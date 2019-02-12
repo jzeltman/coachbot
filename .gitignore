@@ -1,0 +1,9 @@
+.env
+.data
+node_modules
+components/routes/_*
+.sass-cache/
+.DS_Store
+
+app/node_modules
+coachbot/node_modules
