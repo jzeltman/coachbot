@@ -6,4 +6,15 @@ components/routes/_*
 .DS_Store
 
 app/node_modules
-coachbot/node_modules
+app/.env
+app/node_modules/**/*
+app/.expo/*
+app/npm-debug.*
+app/*.jks
+app/*.p12
+app/*.key
+app/*.mobileprovision
+
+bot/node_modules
+bot/.env
+bot/app/.data
