@@ -1,3 +1,5 @@
+import * as ConversationConstants from '../constants/Conversation';
+
 const initialState = [
     {
         _id: '12039715',
@@ -59,8 +61,32 @@ const initialState = [
     },
 ];
 
+const sendReducer = (state,action) => {
+    let message = {
+        _id: Date.now(),
+        text: action.payload.message,
+        timestamp: Date.now(),
+        user: action.payload.userProfile._id,
+        type: 'message',
+    }
+
+    return state.map(convo => {
+        if (parseInt(convo._id) !== parseInt(action.payload.conversationId)) { return convo }
+        else {
+            return {
+                ...convo,
+                lastMessage: message,
+                messages: [...convo.messages, message]
+            }
+        }
+    });
+}
+
 const conversationReducer = (state = initialState, action) => {
     switch (action.type) {
+        case ConversationConstants.SEND:
+            return sendReducer(state,action);
+
         default:
             return state
     }

@@ -49,7 +49,7 @@ class Main extends Component {
     //onObjectives = () => { this.props.navigation.navigate('Objectives'); }
     //onObjectiveItem = () => { this.props.navigation.navigate('Objectives'); }
     onChats = () => { this.props.navigation.navigate('Chats'); }
-    onChatItemPress = (conversation) => { this.props.navigation.navigate('Chat', { conversation }) }
+    onChatItemPress = (conversationId) => { this.props.navigation.navigate('Chat', { conversationId }) }
 }
 
 const offset = 24;

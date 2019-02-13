@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -18,8 +19,7 @@ export default class ListMessages extends Component {
         });
     }
 
-    render(){
-        console.log('ListMessagse',this.props);
+    renderMessages(){
         return this.props.messages.map((message,key) => {
             let localStyles = [styles.message];
             if (message.user === this.props.to) localStyles.push(styles.fromSender);
@@ -27,6 +27,7 @@ export default class ListMessages extends Component {
 
             if (key !== this.props.messages.length - 1 || !message.quick_replies){
                 return <Text key={key} style={localStyles}>{message.text}</Text>
+
             } else if (message.quick_replies){
                 return (
                     <View key={key}>
@@ -37,9 +38,18 @@ export default class ListMessages extends Component {
             }
         });
     }
+
+    render(){
+        return <ScrollView style={styles.chatList} ref={(ref) => { this.scrollView = ref }}>{this.renderMessages()}</ScrollView>
+    }
 }
 
 const styles = StyleSheet.create({
+    chatList:{
+        paddingTop: Offset / 2,
+        paddingBottom: Offset,
+        flex: 1, 
+    },
     message: {
         backgroundColor: '#ccc',
         color: '#333',

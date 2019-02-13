@@ -11,7 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Styles, Offset } from '../Styles';
 
 export default class ChatListHelper extends Component {
-
     renderChats(){
         return this.props.conversations.map((convo,key) => { 
             return (
