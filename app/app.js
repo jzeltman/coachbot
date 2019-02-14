@@ -8,7 +8,6 @@ import AppNavigator from './navigation/AppNavigator';
 import CreateStore from './reducers/configureStore';
 
 const store = CreateStore();
-console.log('store',store);
 
 export default class App extends React.Component {
     state = {
