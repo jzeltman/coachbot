@@ -15,6 +15,52 @@ import { Styles } from '../Styles';
 
 class Main extends Component {
     static navigationOptions = { title: 'Home' };
+    state = { chatOrFriendsTab: 'chat', }
+
+    renderHeading(config){
+        let localStyles = [Styles.title];
+        if (config.inactive) localStyles.push(Styles.inactiveTitle);
+
+        return (
+            <TouchableOpacity onPress={config.onPress}>
+                <Text style={localStyles}>{config.title}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    renderChatOrFriendsTabs(){
+        const chatHeadingConfig = {
+            title: 'Conversations',
+            onPress: () => this.setState({ chatOrFriendsTab: 'chat' }),
+            inactive: this.state.chatOrFriendsTab !== 'chat',
+        }
+        const friendsHeadingConfig = {
+            title: 'Friends',
+            onPress: () => this.setState({ chatOrFriendsTab: 'friends' }),
+            inactive: this.state.chatOrFriendsTab !== 'friends',
+        }
+
+        let listToDisplay = false;
+
+        if (this.state.chatOrFriendsTab === 'chat'){ 
+            listToDisplay = <ChatListHelper 
+                                conversations={this.props.conversations} 
+                                onChatItemPress={this.onChatItemPress} />
+        } else {
+            listToDisplay = <Text>Friends List</Text>
+        }
+
+        return (
+            <View style={styles.chats}>
+                <View style={{flexDirection:'row'}}>
+                    {this.renderHeading(chatHeadingConfig)}
+                    {this.renderHeading(friendsHeadingConfig)}
+                </View>
+                {listToDisplay}
+            </View>
+        )
+    }
+
     render() {
         return (
             <SafeAreaView style={Styles.container}>
@@ -30,14 +76,7 @@ class Main extends Component {
                     </TouchableOpacity>
                     <AgendaListHelper agenda={this.props.objectives} />
                 </View>
-                <View style={styles.chats}>
-                    <TouchableOpacity onPress={this.onChats}>
-                        <Text style={Styles.title}>Chats</Text>
-                    </TouchableOpacity>
-                    <ChatListHelper 
-                        conversations={this.props.conversations} 
-                        onChatItemPress={this.onChatItemPress} />
-                </View>
+                {this.renderChatOrFriendsTabs()}
             </SafeAreaView>
         );
     }
@@ -59,72 +98,14 @@ const styles = StyleSheet.create({
         paddingTop: offset / 2,
         paddingBottom: offset / 2,
     },
-    objectiveItemProgress: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0
-    },
     agenda: {
         flex: 1,
         paddingTop: offset / 2,
         paddingBottom: offset / 2,
     },
-    agendaItem: {
-        padding: offset / 2,
-        backgroundColor: '#ccc',
-        borderRadius: offset / 3,
-        marginTop: offset / 2,
-        marginRight: offset / 2,
-        width: offset * 6,
-        minHeight: offset * 2,
-        position: 'relative'
-    },
-    agendaItemTitle: {
-        fontWeight: 'bold',
-        fontSize: 16
-    },
     chats: {
         flex: 2,
         paddingTop: offset / 2,
-    },
-    chatList: {
-        marginTop: offset / 2,
-        paddingBottom: offset / 2,
-        paddingLeft: offset,
-    },
-    chatItem: {
-        paddingBottom: offset / 2,
-        flexDirection: 'row',
-        position: 'relative',
-    },
-    chatItemImage: {
-        width: 65,
-        height: 65,
-        borderRadius: offset / 2,
-        marginRight: offset / 2
-    },
-    chatItemLabel: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        marginBottom: offset / 6,
-    },
-    chatItemMessage: { color: '#666' },
-    chatAdvanceIcon: {
-        position: 'absolute',
-        top: offset,
-        right: offset,
-        color: '#aaa',
-        fontSize: 14
-    },
-    firstHorizontalItem: { marginLeft: offset },
-    lastHorizontalItem: { marginRight: offset },
-    gradient: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        width: 100
     },
 })
 

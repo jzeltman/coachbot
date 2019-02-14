@@ -12,8 +12,8 @@ export const Styles = StyleSheet.create({
         borderBottomWidth: 1,
         color: 'black',
         marginLeft: Offset,
-        marginRight: Offset,
     },
+    inactiveTitle: { color: '#ccc' },
     chatList: {
         marginTop: Offset / 2,
         paddingBottom: Offset / 2,
