@@ -8,6 +8,8 @@ const initialState= {
     email: 'String',
     gender: 'String',
     lastName: 'String',
+    conversations: ['12039715','10934867',],
+    friends: ['Botkit','Onboarding Bot'],
 };
 
 

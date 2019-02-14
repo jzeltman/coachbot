@@ -68,5 +68,5 @@ export default class Websocket {
         }
     }
 
-    WSsend(message){ console.log('WSsend',message);this.ws.send(JSON.stringify(message)); }
+    WSsend(message){ this.ws.send(JSON.stringify(message)); }
 }
