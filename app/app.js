@@ -2,11 +2,13 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import AppNavigator from './navigation/AppNavigator';
-import rootReducer from './reducers/rootReducer';
+import { PersistGate } from 'redux-persist/integration/react'
 
-const store = createStore(rootReducer);
+import AppNavigator from './navigation/AppNavigator';
+import CreateStore from './reducers/configureStore';
+
+const store = CreateStore();
+console.log('store',store);
 
 export default class App extends React.Component {
     state = {
@@ -24,11 +26,13 @@ export default class App extends React.Component {
             );
         } else {
             return (
-                <Provider store={store}>
-                    <View style={styles.container}>
-                        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                        <AppNavigator />
-                    </View>
+                <Provider store={store.store}>
+                    <PersistGate loading={null} persistor={store.persistor}>
+                        <View style={styles.container}>
+                            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                            <AppNavigator />
+                        </View>
+                    </PersistGate>
                 </Provider> 
             );
         }

@@ -16,7 +16,7 @@ class Chat extends React.Component {
         this.sendTo = this.getConversationParticipants(); 
 
         connectConfig = {
-            url: '://06d74212.ngrok.io',
+            url: '://082a7862.ngrok.io',
             userProfile: this.props.userProfile,
             isBotConvo: true, // TKTK create method to check for bot convos
             sendTo: this.sendTo, 
