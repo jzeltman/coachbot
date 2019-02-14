@@ -9,6 +9,10 @@ import {
 import { Styles, Offset } from '../../Styles';
 
 export default class ListMessages extends Component {
+    renderTyping(){
+        if (this.props.typing) return <Text>{this.props.sendTo} is typing...</Text>
+        else return null;
+    }
     renderQuickReplies(replies){
         return replies.map((reply,key) => {
             return (
@@ -22,7 +26,7 @@ export default class ListMessages extends Component {
     renderMessages(){
         return this.props.messages.map((message,key) => {
             let localStyles = [styles.message];
-            if (message.user === this.props.to) localStyles.push(styles.fromSender);
+            if (message.from) localStyles.push(styles.fromSender);
             else localStyles.push(styles.fromUser)
 
             if (key !== this.props.messages.length - 1 || !message.quick_replies){
@@ -40,7 +44,10 @@ export default class ListMessages extends Component {
     }
 
     render(){
-        return <ScrollView style={styles.chatList} ref={(ref) => { this.scrollView = ref }}>{this.renderMessages()}</ScrollView>
+        return <ScrollView style={styles.chatList} ref={(ref) => { this.scrollView = ref }}>
+            {this.renderMessages()}
+            {this.renderTyping()}
+        </ScrollView>
     }
 }
 

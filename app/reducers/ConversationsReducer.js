@@ -1,4 +1,4 @@
-import * as ConversationConstants from '../constants/Conversation';
+import * as Constants from '../constants/Conversation';
 
 const initialState = [
     {
@@ -9,7 +9,8 @@ const initialState = [
                 _id: '129038410234',
                 timestamp: 'Date.now()', 
                 text: 'botkit messages',
-                user: 'Botkit' 
+                user: 'Botkit',
+                from: 'Botkit' 
             },
             {
                 _id: '129837501928374',
@@ -47,7 +48,8 @@ const initialState = [
                 _id: '0987654321',
                 timestamp: 'Date.now()', 
                 text: 'botkit messages',
-                user: 'Onboarding Bot' 
+                user: 'Onboarding Bot',
+                from: 'Onboarding Bot' 
             },
         ],
         name: 'Onboarding Bot',
@@ -56,39 +58,31 @@ const initialState = [
             _id: '0987654321',
             timestamp: 'Date.now()', 
             text: 'botkit messages',
-            user: 'Onboarding Bot' 
+            user: 'Onboarding Bot',
+            from: 'Onboarding Bot' 
         },
     },
 ];
 
-const sendReducer = (state,action) => {
-    let message = {
-        _id: Date.now(),
-        text: action.payload.message,
-        timestamp: Date.now(),
-        user: action.payload.userProfile._id,
-        type: 'message',
-    }
-
-    return state.map(convo => {
-        if (parseInt(convo._id) !== parseInt(action.payload.conversationId)) { return convo }
-        else {
-            return {
-                ...convo,
-                lastMessage: message,
-                messages: [...convo.messages, message]
-            }
-        }
-    });
-}
-
 const conversationReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ConversationConstants.SEND:
-            return sendReducer(state,action);
+        case Constants.ADD:
+        case Constants.RECEIVE:
+            return state.map(convo => {
+                if (parseInt(convo._id) !== parseInt(action.payload.conversationId)) { return convo }
+                else {
+                    return {
+                        ...convo,
+                        lastMessage: action.payload.message,
+                        messages: [...convo.messages, action.payload.message]
+                    }
+                }
+            });
+            break; 
 
         default:
-            return state
+            return state;
+            break; 
     }
 };
 

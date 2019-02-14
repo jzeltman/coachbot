@@ -4,6 +4,7 @@ import debug from 'debug';
 const Routes = (webserver,controller) => {
     debug('Configured /botkit/receive url');
     webserver.post('/botkit/receive', (req, res) => {
+        console.log('webhook receive',req,res);
         res.status(200);
         controller.handleWebhookPayload(req, res);
     });

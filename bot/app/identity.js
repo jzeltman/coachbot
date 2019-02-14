@@ -1,7 +1,7 @@
 const Identity = (controller) => {
     controller.middleware.spawn.use(function (bot, next) {
         bot.identity = {
-            name: 'CoachBotkit',
+            name: 'CoachBot',
             id: 'web',
         }
     });
