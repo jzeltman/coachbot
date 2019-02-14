@@ -12,6 +12,7 @@ import Chat from '../views/containers/conversation/Chat';
 
 const HomeStack = createStackNavigator({
     Home: Main,
+    Chat: Chat, 
 });
 
 HomeStack.navigationOptions = {
